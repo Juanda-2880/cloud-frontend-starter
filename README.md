@@ -35,20 +35,3 @@ Esta arquitectura desacopla la capa de DNS y CDN de AWS, delegándola a **Cloudf
 * **Seguridad:** Obtenemos SSL (HTTPS) automático y gratuito gestionado por Cloudflare (AWS S3 hosting estático solo ofrece HTTP nativamente).
 * **Simplicidad:** Gestión de DNS simplificada y propagación rápida.
 
----
-
-## 🏛 Arquitectura
-
-El flujo de petición funciona de la siguiente manera:
-
-1.  **Usuario** accede al dominio (ej. `midominio.com`).
-2.  **Cloudflare** resuelve el DNS y maneja la conexión segura (HTTPS).
-3.  Cloudflare hace un "proxy" de la petición hacia el bucket de **AWS S3**.
-4.  **AWS S3** sirve los archivos estáticos (HTML, CSS, JS).
-
-```mermaid
-graph LR
-    A[Usuario] -- HTTPS --> B[Cloudflare (DNS + SSL)]
-    B -- HTTP --> C[AWS S3 Bucket]
-    C -- Archivos Estáticos --> B
-    B -- Respuesta Segura --> A
